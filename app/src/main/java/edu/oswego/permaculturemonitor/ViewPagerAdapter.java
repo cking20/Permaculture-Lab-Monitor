@@ -27,17 +27,17 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
             // Open FragmentTab1.java
             case 0:
-                FragmentTab1 fragmenttab1 = new FragmentTab1();
+                android.support.v4.app.Fragment fragmenttab1 = new android.support.v4.app.Fragment();
                 return fragmenttab1;
 
             // Open FragmentTab2.java
             case 1:
-                FragmentTab2 fragmenttab2 = new FragmentTab2();
+                android.support.v4.app.Fragment fragmenttab2 = new android.support.v4.app.Fragment();
                 return fragmenttab2;
 
             // Open FragmentTab3.java
             case 2:
-                FragmentTab3 fragmenttab3 = new FragmentTab3();
+                android.support.v4.app.Fragment fragmenttab3 = new android.support.v4.app.Fragment();
                 return fragmenttab3;
         }
         return null;
