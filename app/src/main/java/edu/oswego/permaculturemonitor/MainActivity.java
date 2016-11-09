@@ -4,17 +4,29 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.Toast;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import com.astuetz.PagerSlidingTabStrip;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import android.os.AsyncTask;
 
 public class MainActivity extends AppCompatActivity {
+    DBConnect connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Database Connection
+
+        connection = new DBConnect(); //&nbsp;//the class file
+        DoQuery doQuery = new DoQuery();
+        doQuery.execute("");
 
         // action bar toolbar
         Toolbar actionBarToolBar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -53,6 +65,32 @@ public class MainActivity extends AppCompatActivity {
                // Toast.makeText(MainActivity.this, "---TEST---", Toast.LENGTH_SHORT).show();
 
             }
+
         });
     }
+    public class DoQuery extends AsyncTask<String,String,String> {
+        String ret = "";
+        @Override
+        protected String doInBackground(String... params) {
+            try{
+                Connection con = connection.CONN();
+                if(con == null){
+                    //Error connecting to DataBase
+                    Log.e("connection","Couldnt connect to to database");
+                    ret = "Couldnt connect to to database.";
+                } else {
+                    String query = "select * from sensor";//just a test query
+                    Statement stmt = con.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()){
+                        ret = "it worked!";
+                    }
+                }
+            }catch (Exception ex){
+                ret = "Exceptions";
+            }
+            return ret;
+        }
+    }
 }
+
